@@ -7,50 +7,22 @@ import (
 
 var blackPointsMap map[int64]map[int64]bool
 
-func main() {
+func initMap() {
 	blackPointsMap = map[int64]map[int64]bool{}
+}
+
+func main() {
 	var n, a, b, p, q, r, s int64
-	testPattern := 3
-	testPattern1 := func() {
-		n = 5
-		a = 3
-		b = 2
-		p = 1
-		q = 5
-		r = 1
-		s = 5
-	}
-	testPattern2 := func() {
-		n = 5
-		a = 3
-		b = 3
-		p = 4
-		q = 5
-		r = 2
-		s = 5
-	}
-	testPattern3 := func() {
-		n = 1000000000000000000
-		a = 999999999999999999
-		b = 999999999999999999
-		p = 999999999999999998
-		q = 1000000000000000000
-		r = 999999999999999998
-		s = 1000000000000000000
-	}
 
-	if testPattern == 0 {
-		fmt.Scan(&n, &a, &b)
-		fmt.Scan(&p, &q, &r, &s)
-	} else if testPattern == 1 {
-		testPattern1()
-	} else if testPattern == 2 {
-		testPattern2()
-	} else if testPattern == 3 {
-		testPattern3()
-	}
+	fmt.Scan(&n, &a, &b)
+	fmt.Scan(&p, &q, &r, &s)
 
-	calcRule(a, b, n)
+	calc(a, b, n)
+	print(p, q, r, s, false)
+	return
+}
+
+func print(p, q, r, s int64, forTest bool) *[]string {
 	var output []string
 	for i := p; i <= q; i++ {
 		var outputRow string
@@ -68,13 +40,18 @@ func main() {
 			output = append(output, outputRow)
 		}
 	}
+	if forTest {
+		return &output
+	}
+
 	for i := 0; i < len(output); i++ {
 		fmt.Println(output[i])
 	}
-	return
+	return nil
 }
 
-func calcRule(a, b, n int64) {
+func calc(a, b, n int64) {
+	initMap()
 	calcRule1(a, b, n)
 	calcRule2(a, b, n)
 	return
